@@ -29,7 +29,7 @@ In addition:
 - Space for a data volume to store ACP configurations.
 
 
-### Como usarlo
+### How to get started
 
 You can see an automatic example of how to use the ACP script in  [Acp](https://github.com/k8s-cicd-tools/deployment-acp-demo).
 
