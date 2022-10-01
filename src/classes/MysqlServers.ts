@@ -8,13 +8,13 @@ export class MysqlServers {
     userRules: UserRules;
     developerNamespace: string;
 
-    constructor(mysql_servers_json: any, developerMysqlUser: string, userRules: UserRules, developerNamespace: string,
-                databases_json: any) {
+    constructor(mysqlServersJson: any, developerMysqlUser: string, userRules: UserRules, developerNamespace: string,
+                databasesJson: any) {
         this.developerMysqlUser = developerMysqlUser;
         this.userRules = userRules;
         this.developerNamespace = developerNamespace;
-        this.servers = mysql_servers_json.map((server: any) => new MysqlServer(server.name, server.ip, server.port,
-            databases_json, this.developerMysqlUser));
+        this.servers = mysqlServersJson.map((server: any) => new MysqlServer(server.name, server.ip, server.port,
+            databasesJson, this.developerMysqlUser, developerNamespace));
     }
 
     create() {
@@ -33,5 +33,14 @@ export class MysqlServers {
         this.servers.forEach((server: MysqlServer) => {
             server.createDatabases();
         });
+    }
+
+    getServerFromDatabaseName(databaseName: string) {
+        for (let server of this.servers) {
+            if (server.databases.hasDatabase(databaseName)) {
+                return server;
+            }
+        }
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 import {UserRule} from "./UserRule";
 import {Table} from "./Table";
 
+
 // class for UserRules
 export class UserRules {
     rules: UserRule[] = [];
@@ -20,5 +21,6 @@ export class UserRules {
     addRule(rule: UserRule) {
         this.rules.push(rule);
     }
+
 }
 

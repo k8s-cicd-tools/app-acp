@@ -1,6 +1,6 @@
 
 
-//class for rule table
+//class for table
 export class Table {
     name: string;
     actions: string[];

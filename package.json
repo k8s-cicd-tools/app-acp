@@ -5,9 +5,14 @@
         "@types/node": "^14"
     },
     "dependencies": {
+        "@mysql/xdevapi": "^8.0.30",
         "@pulumi/aws": "^5.0.0",
         "@pulumi/awsx": "^0.40.0",
+        "@pulumi/command": "^0.5.2",
+        "@pulumi/kubernetes": "^3.21.4",
         "@pulumi/mysql": "^3.1.0",
-        "@pulumi/pulumi": "^3.0.0"
+        "@pulumi/pulumi": "^3.0.0",
+        "hasha": "^5.2.2",
+        "mysql": "^2.18.1"
     }
 }

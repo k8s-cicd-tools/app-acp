@@ -1,8 +1,0 @@
-config:
-  acp:jdoePassword:
-    secure: AAABAF0JhpPAgr/xrKauqIZ153v6hTIBOqfxc+/68eqtLL3zweVq
-  aws:region: us-east-1
-  mysql:endpoint: localhost:3306
-  mysql:password:
-    secure: AAABAIjalek/qbGKtseGwXfITNomxwxrkf5Ku6tNKMAzSgliyYsC
-  mysql:username: root

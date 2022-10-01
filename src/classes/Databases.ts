@@ -14,12 +14,11 @@ export class Databases {
     dependsOn: pulumi.Resource[] = [];
 
     constructor(databases_json: any, developerMysqlUser: string, serverName: string, serverIp: string,
-                serverPort: number, dependsOn: pulumi.Resource[]) {
+                serverPort: number, rootMysqlPassword: string) {
         this.developerMysqlUser = developerMysqlUser;
         this.serverName = serverName;
         this.serverIp = serverIp;
         this.serverPort = serverPort;
-        this.dependsOn = dependsOn;
         databases_json.forEach((database_json: any) => {
             //check if serverName matches
             if (database_json.serverName === serverName) {
@@ -29,7 +28,7 @@ export class Databases {
                     tables.push(table);
                 });
                 this.databases.push(new Database(this.serverIp, this.serverPort, database_json.name,
-                    database_json.restoreFileName, tables, developerMysqlUser, this.dependsOn));
+                    database_json.restoreFileName, tables, developerMysqlUser, rootMysqlPassword, []));
             }
         });
     }
@@ -47,9 +46,11 @@ export class Databases {
         });
     }
 
-    create() {
+    create(dependsOn: pulumi.Resource[]) {
+        this.dependsOn = dependsOn;
+
         this.databases.forEach((database: Database) => {
-            database.create();
+            database.create(this.dependsOn);
         });
     }
 
@@ -71,11 +72,27 @@ export class Databases {
         });
     }
 
-    createAll() {
-        this.create();
+    createAll(dependsOn: pulumi.Resource[]) {
+        this.create(dependsOn);
         this.createDeveloperUser();
         this.restore();
         this.createRules();
+    }
+
+    getDependsOn() {
+        let dependsOn: pulumi.Resource[] = [];
+        this.databases.forEach((database: Database) => {
+            dependsOn = dependsOn.concat(database.getDependsOn());
+        });
+        return dependsOn;
+    }
+
+    hasDatabase(name: string) {
+        return this.databases.some((database: Database) => database.name === name);
+    }
+
+    getDatabaseFromName(name: string) {
+        return this.databases.find((database: Database) => database.name === name);
     }
 }
 
